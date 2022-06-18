@@ -49,7 +49,7 @@ def ReverseLink(l_link: Linked_list) -> None:
 
 def removeNthFromEnd(head, n: int):
     """
-    Given the head of a linked list, remove the nth node from the end of the list and return its head.
+    Given the head of a linked list, remove the nth node from the end of the list and return its head..
     """
     right_pointer = head
     left_pointer = head
