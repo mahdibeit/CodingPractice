@@ -318,6 +318,79 @@ def searchRange(nums, target: int):
 
     return [-1, -1]
 
+def combinationSum(self, candidates, target: int):
+    """
+    Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+
+    The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+    
+    It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+    Example 1:
+    
+    Input: candidates = [2,3,6,7], target = 7
+    Output: [[2,2,3],[7]]
+    
+    """
+    out = []
+    
+    def Remainder(canList, target, subOut):
+        for can in canList:
+            if can == target:
+                out.append(subOut + [can])
+            else:
+                newCanList = [i for i in canList if i <= target - can and i >= can]
+                if newCanList:
+                    Remainder(newCanList, target - can, subOut + [can])
+                
+    Remainder([i for i in candidates if i <= target], target, [])
+    
+    return out
+
+def combinationSum2(self, candidates, target: int):
+    """
+    Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+    Each number in candidates may only be used once in the combination.
+    
+    Note: The solution set must not contain duplicate combinations.
+    
+    Example 1:
+    
+    Input: candidates = [10,1,2,7,6,1,5], target = 8
+    Output: 
+    [
+    [1,1,6],
+    [1,2,5],
+    [1,7],
+    [2,6]
+    ]
+    
+    """
+    out = []
+    dup = {} # can: duplicate
+    for can in candidates: 
+        dup.setdefault(can, 0)
+        dup[can] += 1
+    
+    candidates = list(set(candidates))
+    def Remainder(canList, target, subOut, dup):
+        for can in canList:
+            if can == target:
+                out.append(subOut + [can])
+            else:
+                
+                if dup[can] != 1:
+                    newCanList = [i for i in canList if i <= target - can and i >= can]
+                    dup[can] -= 1
+                else:
+                    newCanList = [i for i in canList if i <= target - can and i >= can and i != can]
+                if newCanList:
+                    Remainder(newCanList, target - can, subOut + [can], dup.copy())
+            
+    Remainder([i for i in candidates if i <= target], target, [], dup.copy())
+
+    return out
 
 if __name__=="__main__":
     sample=[1,2,9, 3,3,4,5,6,6,7,8,9,1,3,3]
