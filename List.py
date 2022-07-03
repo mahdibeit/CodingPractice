@@ -392,6 +392,65 @@ def combinationSum2(self, candidates, target: int):
 
     return out
 
+
+def jump(nums) -> int:
+    """
+    Given an array of non-negative integers nums, you are initially positioned
+    at the first index of the array.
+    Each element in the array represents your maximum jump length at that
+    position.
+    Your goal is to reach the last index in the minimum number of jumps.
+    You can assume that you can always reach the last index.
+
+    Example 1:
+
+    Input: nums = [2,3,1,1,4]
+    Output: 2
+    Explanation: The minimum number of jumps to reach the last index is 2.
+    Jump 1 step from index 0 to 1, then 3 steps to the last index.
+    """
+    totalJumps = 0
+    idx = 0
+    while (idx < len(nums) - 1):
+        if idx + nums[idx] >= len(nums) - 1:
+            totalJumps += 1
+            break
+        max_idx = 0
+        for step, next_j in enumerate(nums[idx+1: idx + nums[idx] + 1]):
+            if step + next_j > max_idx:
+                max_idx = step + next_j
+                next_idx = idx + step + 1
+        idx = next_idx
+        totalJumps += 1
+
+    return totalJumps
+
+
+def permute(nums):
+    """
+    Given an array nums of distinct integers, return all the possible
+    permutations. You can return the answer in any order.
+
+    Example 1:
+
+    Input: nums = [1,2,3]
+    Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+    """
+    out = []
+
+    def perm(subList):
+        if len(subList) != len(nums):
+            for digit in nums:
+                if digit not in subList:
+                    perm(subList + [digit])
+        else:
+            out.append(subList)
+
+    perm([])
+    return out
+                
+                
+
 if __name__=="__main__":
     sample=[1,2,9, 3,3,4,5,6,6,7,8,9,1,3,3]
     
